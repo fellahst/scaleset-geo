@@ -62,7 +62,7 @@ public class ShapeSerializer extends JsonSerializer<Shape> {
 
     void write(Rectangle rectangle, JsonGenerator gen) throws IOException {
         gen.writeStartObject();
-        gen.writeStringField("type", "Rectangle");
+        gen.writeStringField("type", "Envelope");
         gen.writeFieldName("coordinates");
         gen.writeStartArray();
         writeCoordinate(rectangle.getMinX(), rectangle.getMaxY(), gen);

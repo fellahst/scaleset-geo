@@ -1,7 +1,17 @@
 package com.scaleset.geo.geojson;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.vividsolutions.jts.geom.*;
+import com.spatial4j.core.shape.Rectangle;
+import com.vividsolutions.jts.geom.Envelope;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.LinearRing;
+import com.vividsolutions.jts.geom.MultiLineString;
+import com.vividsolutions.jts.geom.MultiPoint;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
 
 public class GeoJsonModule extends SimpleModule {
 
@@ -24,10 +34,12 @@ public class GeoJsonModule extends SimpleModule {
         addDeserializer(MultiPolygon.class, new GeometryDeserializer<MultiPolygon>());
         addDeserializer(Polygon.class, new GeometryDeserializer<Polygon>());
         addDeserializer(Envelope.class, new EnvelopeDeserializer());
+        addDeserializer(Rectangle.class, new RectangleDeserializer());
 
         // serializers
         addSerializer(Geometry.class, new GeometrySerializer(precision));
         addSerializer(Envelope.class, new EnvelopeSerializer(precision));
+        addSerializer(Rectangle.class, new RectangleSerializer());
     }
 
 }

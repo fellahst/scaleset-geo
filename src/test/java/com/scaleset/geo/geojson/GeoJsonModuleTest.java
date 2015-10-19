@@ -1,8 +1,16 @@
 package com.scaleset.geo.geojson;
 
+import java.io.IOException;
+
+import org.json.JSONException;
+import org.junit.Assert;
+import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scaleset.geo.Feature;
+import com.spatial4j.core.shape.Rectangle;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
@@ -13,12 +21,6 @@ import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.io.IOException;
-import org.json.JSONException;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 public class GeoJsonModuleTest extends Assert {
 
@@ -309,5 +311,23 @@ public class GeoJsonModuleTest extends Assert {
     assertTrue(gc.getGeometryN(0) instanceof Point);
     assertTrue(gc.getGeometryN(1) instanceof Polygon);
     assertTrue(gc.getGeometryN(2) instanceof LineString);
+  }
+  
+  
+  @Test
+  public void testRectangle() throws IOException, JSONException {
+    String expected = "{\"type\": \"Envelope\", \"coordinates\": [ [-45.0, 46.0], [45.0, -46.0] ]}";
+    Rectangle g = mapper.readValue(expected, Rectangle.class);
+    assertNotNull(g);
+    assertTrue(g instanceof Rectangle);
+    Rectangle r = (Rectangle) g;
+    assertEquals(-45.0,r.getMinX(), MM_PRECISION);
+    assertEquals(45.0, r.getMaxX(), MM_PRECISION);
+    assertEquals(-46.0, r.getMinY(), MM_PRECISION);
+    assertEquals(46.0, r.getMaxY(), MM_PRECISION);
+
+    String json = mapper.writeValueAsString(r);
+    System.out.println(json);
+    JSONAssert.assertEquals(expected, json, true);
   }
 }
