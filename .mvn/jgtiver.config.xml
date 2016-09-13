@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- the name of this file looks like a typo, but it's what the plugin looks for -->
+<configuration>
+  <nonQualifierBranches>master</nonQualifierBranches>
+  <mavenLike>false</mavenLike>
+
+  <useCommitDistance>true</useCommitDistance>
+  <useDirty>true</useDirty>
+  <useGitCommitId>true</useGitCommitId>
+  <gitCommitIdLength>8</gitCommitIdLength>
+
+  <autoIncrementPatch>false</autoIncrementPatch>
+</configuration>
